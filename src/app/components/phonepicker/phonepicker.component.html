@@ -1,0 +1,28 @@
+<div class="wrapper">
+  <p-dropdown  [options]="countries | toSelectItem" [(ngModel)]="selected">
+    <ng-template let-selected pTemplate="selectedItem"> 
+      <span>+{{ selected.value.callingCodes[0] }}</span>
+    </ng-template>
+    <ng-template let-item pTemplate="item">
+      <div class="list-row">
+        <img src="" class="{{'flag flag-' + item.code}}" >
+        <div style="font-size:14px">{{item.label}}</div>
+      </div>
+    </ng-template>
+  </p-dropdown>
+
+  <form [formGroup]="phoneForm" (submit)="onSubmit()">
+    <app-phone-input 
+      formControlName="phoneNumber"
+    ></app-phone-input>
+    <button 
+      [disabled]="phoneForm.get('phoneNumber').errors"
+      class="call-button" 
+      type="submit">
+      <img src="phone-icon.png">
+      Call
+    </button>
+  </form>
+</div>
+
+<p *ngIf="isCalling">Calling {{ phone.number }}... </p>
